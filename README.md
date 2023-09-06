@@ -1,66 +1,97 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<h1>NLET</h1>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+# Candidate Management APIs
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This repository contains a set of APIs for managing candidates. These APIs allow you to perform various operations related to candidates, including registration, login, candidate creation, searching, and listing.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## API Endpoints
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Register a New Admin (POST)
 
-## Learning Laravel
+- Endpoint: `/api/auth/register`
+- Description: Register a new admin with a unique email and password.
+- Request:
+  - `name` (string, required): The name of the admin.
+  - `email` (string, required): The admin's email address.
+  - `password` (string, required): The admin's password.
+  - `secret_key` (string, required): The admin's Registration Secret Key.
+- Response: Successfully registered admin.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Admin Login (POST)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- Endpoint: `/api/auth/login`
+- Description: Authenticate an admin and obtain a JWT token for further API access.
+- Request:
+  - `email` (string, required): The admin's email address.
+  - `password` (string, required): The admin's password.
+- Response: A JSON response containing an access token.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Admin Profile (GET)
 
-## Laravel Sponsors
+- Endpoint: `/api/auth/profile`
+- Description: Retrieve the profile of the authenticated admin using the JWT token.
+- Response: A JSON response with admin profile data.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### Admin Logout (GET)
 
-### Premium Partners
+- Endpoint: `/api/auth/logout`
+- Description: Log out the authenticated admin and invalidate the JWT token.
+- Response: A JSON response confirming the successful logout.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
 
-## Contributing
+### Create Candidate (POST)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Endpoint: `/api/auth/candidate`
+- Description: Create a new candidate record.
+- Request:
+  - `first_name` (string, required): The first name of the candidate.
+  - `last_name` (string, optional): The last name of the candidate.
+  - `email` (string, required): The candidate's email address.
+  - `contact_number` (string, required): The candidate's contact number.
+  - `gender` (integer, required): The candidate's gender (1 for Male, 2 for Female).
+  - `qualification_specialization` (string, optional): The candidate's qualification specialization.
+  - `total_experience` (integer, optional): The candidate's total experience in years.
+  - `birthdate_unix` (integer, optional): The candidate's birth date in Unix Timestamp (Epoch).
+  - `full_address` (string, optional): The candidate's full address.
+  - `resume_file` (file, optional): The candidate's resume file (PDF, DOC, or DOCX format).
+- Response: A JSON response confirming the successful creation of a candidate.
 
-## Code of Conduct
+### Find Candidate by ID (GET)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- Endpoint: `/api/auth/candidates/{id}`
+- Description: Retrieve a candidate by their unique ID.
+- Response: A JSON response with candidate data or an error message if not found.
 
-## Security Vulnerabilities
+### List Candidates (GET)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Endpoint: `/api/auth/candidates`
+- Description: List all candidates with pagination.
+- Request:
+  - `limit` (integer, optional): The number of candidates to show per page (default: 25).
+- Response: A JSON response with paginated candidate data.
 
-## License
+### Search Candidates by Name (GET)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Endpoint: `/api/auth/candidates/search/{name}`
+- Description: Search for candidates by name.
+- Response: A JSON response containing a list of matching candidates or an error message if not found.
+
+
+
+## Installation and Usage
+
+To use these APIs, follow these steps:
+
+1. Clone the repository.
+2. Install the required dependencies using `composer install`.
+3. Set up your database configuration in `.env`.
+4. Migrate the database using `php artisan migrate`.
+5. Start the Laravel development server using `php artisan serve`.
+6. Access the APIs using your preferred API client (e.g., Postman).
+
+Ensure that you have the necessary authentication details (e.g., JWT token) for authenticated endpoints.
+
+Please refer to the individual API endpoints for detailed request and response formats.
+
+Happy coding!
