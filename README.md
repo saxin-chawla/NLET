@@ -26,12 +26,31 @@ This repository contains a set of APIs for managing candidates. These APIs allow
   - `email` (string, required): The admin's email address.
   - `password` (string, required): The admin's password.
 - Response: A JSON response containing an access token.
+- Resonse Result:
+    ```json
+      {
+        "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE2OTM5NzMyMTUsImV4cCI6MTY5Mzk3NjgxNSwibmJmIjoxNjkzOTczMjE1LCJqdGkiOiJGUTlZS0M1aXM0NTNUSWpHIiwic3ViIjoiNCIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.IH7mQYG1_xOBp_M2iNWS6UyuQXSRHiTBSvMZ5r6SQk0",
+        "token_type": "bearer",
+        "expires_in": 3600
+    }
+
+
 
 ### Admin Profile (GET)
 
 - Endpoint: `/api/auth/profile`
 - Description: Retrieve the profile of the authenticated admin using the JWT token.
 - Response: A JSON response with admin profile data.
+- Response Result:
+    ```json
+        {
+            "id": 4,
+            "name": "sachin",
+            "email": "sachin2@gmail.com",
+            "email_verified_at": null,
+            "created_at": "2023-09-05T04:49:17.000000Z",
+            "updated_at": "2023-09-05T04:49:17.000000Z"
+        }
 
 ### Admin Logout (GET)
 
@@ -57,11 +76,32 @@ This repository contains a set of APIs for managing candidates. These APIs allow
   - `resume_file` (file, optional): The candidate's resume file (PDF, DOC, or DOCX format).
 - Response: A JSON response confirming the successful creation of a candidate.
 
+
 ### Find Candidate by ID (GET)
 
 - Endpoint: `/api/auth/candidates/{id}`
 - Description: Retrieve a candidate by their unique ID.
 - Response: A JSON response with candidate data or an error message if not found.
+- Response Result:
+    ```json
+        {
+            "candidate": {
+                "id": 1,
+                "first_name": "Dummy",
+                "last_name": "Singh",
+                "email": "sachinchawla24682@gmail.com",
+                "contact_number": "895586470",
+                "gender": 1,
+                "qualification_specialization": "Computer Science",
+                "total_experience": 2,
+                "birth_date": null,
+                "full_address": "Jaipur",
+                "resume_file_path": "resumes/9g5kxUNOdjf03ZVGBLWGz35TN2T9Jn9oSu66QGPO.pdf",
+                "created_at": "2023-09-06T03:04:45.000000Z",
+                "updated_at": "2023-09-06T03:04:45.000000Z",
+                "birthdate_unix": null
+            }
+        }
 
 ### List Candidates (GET)
 
@@ -70,12 +110,111 @@ This repository contains a set of APIs for managing candidates. These APIs allow
 - Request:
   - `limit` (integer, optional): The number of candidates to show per page (default: 25).
 - Response: A JSON response with paginated candidate data.
+- Response Result:
+    ```json
+        {
+            "page": 1,
+            "limit": 25,
+            "current_page": 1,
+            "first_page_url": "http://127.0.0.1:8000/api/auth/candidates?page=1",
+            "from": 1,
+            "next_page_url": null,
+            "path": "http://127.0.0.1:8000/api/auth/candidates?page=1",
+            "per_page": 25,
+            "prev_page_url": null,
+            "to": 2,
+            "data": [
+                {
+                    "id": 1,
+                    "first_name": "Dummy",
+                    "last_name": "Singh",
+                    "email": "sachinchawla24682@gmail.com",
+                    "contact_number": "895586470",
+                    "gender": 1,
+                    "qualification_specialization": "Computer Science",
+                    "total_experience": 2,
+                    "birth_date": null,
+                    "full_address": "Jaipur",
+                    "resume_file_path": "resumes/9g5kxUNOdjf03ZVGBLWGz35TN2T9Jn9oSu66QGPO.pdf",
+                    "created_at": "2023-09-06T03:04:45.000000Z",
+                    "updated_at": "2023-09-06T03:04:45.000000Z",
+                    "birthdate_unix": null
+                },
+                {
+                    "id": 2,
+                    "first_name": "Dummy",
+                    "last_name": "Singh",
+                    "email": "sachinchawla24682@gmail.com",
+                    "contact_number": "895586470",
+                    "gender": 1,
+                    "qualification_specialization": "Computer Science",
+                    "total_experience": 2,
+                    "birth_date": null,
+                    "full_address": "Jaipur",
+                    "resume_file_path": "resumes/CSEgohMTAROWurxOpZqrEYgOsNYfBenyrLfXR60z.pdf",
+                    "created_at": "2023-09-06T04:47:52.000000Z",
+                    "updated_at": "2023-09-06T04:47:52.000000Z",
+                    "birthdate_unix": null
+                }
+            ]
+        }
 
 ### Search Candidates by Name (GET)
 
 - Endpoint: `/api/auth/candidates/search/{name}`
 - Description: Search for candidates by name.
 - Response: A JSON response containing a list of matching candidates or an error message if not found.
+- Response Result:
+    ```json
+        {
+            "data": [
+                {
+                    "id": 1,
+                    "first_name": "Dummy",
+                    "last_name": "Singh",
+                    "email": "sachinchawla24682@gmail.com",
+                    "contact_number": "895586470",
+                    "gender": 1,
+                    "qualification_specialization": "Computer Science",
+                    "total_experience": 2,
+                    "full_address": "Jaipur",
+                    "resume_file_path": "resumes/9g5kxUNOdjf03ZVGBLWGz35TN2T9Jn9oSu66QGPO.pdf",
+                    "created_at": "2023-09-06T03:04:45.000000Z",
+                    "updated_at": "2023-09-06T03:04:45.000000Z",
+                    "birthdate_unix": null
+                },
+                {
+                    "id": 2,
+                    "first_name": "Dummy",
+                    "last_name": "Singh",
+                    "email": "sachinchawla24682@gmail.com",
+                    "contact_number": "895586470",
+                    "gender": 1,
+                    "qualification_specialization": "Computer Science",
+                    "total_experience": 2,
+                    "full_address": "Jaipur",
+                    "resume_file_path": "resumes/CSEgohMTAROWurxOpZqrEYgOsNYfBenyrLfXR60z.pdf",
+                    "created_at": "2023-09-06T04:47:52.000000Z",
+                    "updated_at": "2023-09-06T04:47:52.000000Z",
+                    "birthdate_unix": null
+                },
+                {
+                    "id": 3,
+                    "first_name": "Dummy",
+                    "last_name": "Singh",
+                    "email": "sachinchawla24682@gmail.com",
+                    "contact_number": "895586470",
+                    "gender": 1,
+                    "qualification_specialization": "Computer Science",
+                    "total_experience": 2,
+                    "full_address": "Jaipur",
+                    "resume_file_path": "resumes/xc5XKDzQVmPQ5XlgXrp3OtxolDy4KKXK6MFhtIH8.pdf",
+                    "created_at": "2023-09-06T04:49:35.000000Z",
+                    "updated_at": "2023-09-06T04:49:35.000000Z",
+                    "birthdate_unix": "2023-03-02 00:00:00"
+                }
+            ]
+        }
 
 
 
